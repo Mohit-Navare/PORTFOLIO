@@ -1,25 +1,135 @@
-from flask import Flask, render_template, send_from_directory, send_file
-import os
-from content import PAGE_CONTENT
-
-app = Flask(__name__, template_folder="templates", static_folder="static")
-
-
-@app.route("/")
-def index():
-    return render_template("index.html", content=PAGE_CONTENT)
-
-
-@app.route("/download-resume")
-def download_resume():
-    resume_path = os.path.join(app.root_path, "assets", "pdf", "mohit-navare-resume.pdf")
-    return send_file(resume_path, as_attachment=True, download_name="mohit-navare-resume.pdf")
-
-
-@app.route("/assets/<path:filename>")
-def serve_assets(filename: str):
-    return send_from_directory(os.path.join(app.root_path, "assets"), filename)
-
-
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+PAGE_CONTENT = {
+    "site_title": "Mohit Navare — Developer",
+    "nav_links": [
+        {"href": "#skills", "label": "Skills"},
+        {"href": "#projects", "label": "Projects"},
+        {"href": "#experience", "label": "Experience"},
+        {"href": "#contact", "label": "Contact"},
+    ],
+    "hero": {
+        "tag": "Available for internships & opportunities",
+        "title_line_1": "Mohit",
+        "title_line_2": "Navare",
+        "intro": "I build",
+        "description": "Computer Engineering student, full-stack developer, and programming instructor. I turn practical ideas into real, shipped products using Python, Flask, MongoDB — and I teach others to do the same.",
+        "primary_cta": "View My Work →",
+        "secondary_cta": "Get in Touch",
+        "stats": [
+            {"value": "4+", "label": "Projects shipped"},
+            {"value": "6+", "label": "Certifications"},
+            {"value": "50+", "label": "Students taught"},
+        ],
+        "card_name": "Mohit Navare",
+        "card_role": "Full Stack Developer · Instructor",
+        "card_location": "📍 Badlapur, Maharashtra",
+    },
+    "skills": [
+        {"icon": "{ LANG }", "name": "Languages", "tags": ["Python", "Java", "C", "C++", "SQL", "JavaScript"], "delay": ""},
+        {"icon": "UI / WEB", "name": "Frontend", "tags": ["HTML5", "CSS3", "Bootstrap", "Responsive", "UX basics"], "delay": "d1"},
+        {"icon": "API", "name": "Backend", "tags": ["Flask", "REST APIs", "Auth", "Sessions", "Jinja2"], "delay": "d2"},
+        {"icon": "DB", "name": "Databases", "tags": ["MongoDB", "MySQL", "GridFS", "Compass", "Workbench"], "delay": ""},
+        {"icon": "DEV", "name": "Tools", "tags": ["GitHub", "VS Code", "Postman", "Tkinter", "Render"], "delay": "d1"},
+        {"icon": "ML", "name": "Machine Learning", "tags": ["IBM Watson", "Python ML", "Data Science", "scikit-learn"], "delay": "d2"},
+    ],
+    "featured_project": {
+        "number": "01",
+        "badge": "Live · Featured",
+        "title": "PyInsta",
+        "description": "A full Instagram-clone built from scratch with Python & Flask. Features real user authentication, image uploads with GridFS, a live feed, follow system, comments, and DMs — deployed live on Render.",
+        "tech": ["Python", "Flask", "MongoDB", "GridFS", "HTML/CSS", "Render"],
+        "link": "https://pyinsta-n2ye.onrender.com",
+        "link_text": "Open Live App ↗",
+    },
+    "project_cards": [
+        {
+            "number": "02",
+            "title": "Student Management System",
+            "description": "Desktop GUI app for managing student records, attendance and academic data with CRUD operations.",
+            "tech": ["Python", "Tkinter", "MySQL"],
+            "gradient": "linear-gradient(135deg,rgba(139,92,246,0.08),rgba(6,182,212,0.04))",
+            "delay": "",
+        },
+        {
+            "number": "03",
+            "title": "Java Chat Application",
+            "description": "Socket-based real-time chat system exploring networking fundamentals and client-server design.",
+            "tech": ["Java", "Sockets", "Networking"],
+            "gradient": "linear-gradient(135deg,rgba(6,182,212,0.08),rgba(139,92,246,0.04))",
+            "delay": "d1",
+        },
+        {
+            "number": "04",
+            "title": "Grocery Store Management",
+            "description": "Full web-based store management with inventory tracking, billing and product management.",
+            "tech": ["HTML", "CSS", "PHP", "MySQL"],
+            "gradient": "linear-gradient(135deg,rgba(244,63,94,0.06),rgba(139,92,246,0.04))",
+            "delay": "d2",
+        },
+    ],
+    "experience": [
+        {
+            "period": "Feb 2026 — Present",
+            "role": "Programming Instructor",
+            "org": "DISHA Computer Institute · Part-time",
+            "points": [
+                "Teach C, C++, Python with emphasis on logic building",
+                "Mentor students through debugging and real projects",
+                "Deliver practical sessions on databases and fundamentals",
+            ],
+            "chips": ["C/C++", "Python", "SQL", "Teaching"],
+            "delay": "",
+        },
+        {
+            "period": "Past",
+            "role": "Web Development Intern",
+            "org": "Swastik Enterprise (Druve Media)",
+            "points": [
+                "WordPress-based web development and site management",
+                "Client-facing project workflow exposure",
+            ],
+            "chips": ["WordPress", "Web Dev"],
+            "delay": "d1",
+        },
+        {
+            "period": "2025 — Present",
+            "role": "B.E. Computer Engineering",
+            "org": "G.V. Acharya Institute · University of Mumbai",
+            "points": [
+                "Core CS: DSA, OS, DBMS, Computer Networks",
+                "Building full-stack depth alongside coursework",
+            ],
+            "chips": ["Full Stack", "DSA", "Networks"],
+            "delay": "",
+        },
+        {
+            "period": "2022 — 2025",
+            "role": "Diploma in Computer Engineering",
+            "org": "Balasaheb Mhatre Polytechnic · MSBTE",
+            "points": [
+                "72.34% aggregate · Final semester 74.12%",
+                "Strong programming and CS fundamentals foundation",
+            ],
+            "chips": ["72.34%", "MSBTE", "3 Years"],
+            "delay": "d1",
+        },
+    ],
+    "certifications": [
+        {"icon": "🏅", "name": "Machine Learning with Python", "by": "IBM"},
+        {"icon": "🏅", "name": "Python 101 for Data Science", "by": "IBM"},
+        {"icon": "🔧", "name": "Computer Hardware & Networking", "by": "Industry"},
+        {"icon": "💡", "name": "C Programming", "by": "Professional"},
+        {"icon": "💡", "name": "C++ Programming", "by": "Professional"},
+        {"icon": "🐍", "name": "Python Full-Stack Development", "by": "Professional"},
+    ],
+    "contact": {
+        "heading": "Let's build something valuable",
+        "description": "Open to internships, apprenticeships (ISRO / DRDO), freelance work, and collaboration. Response within 24 hours.",
+        "email": "navaremohit2008@gmail.com",
+        "links": [
+            {"label": "✉ Email", "href": "mailto:navaremohit2008@gmail.com"},
+            {"label": "🔗 LinkedIn", "href": "https://linkedin.com/in/mohit-navare-48ba603aa"},
+            {"label": "🐙 GitHub", "href": "https://github.com/Mohit-Navare"},
+            {"label": "🚀 PyInsta", "href": "https://pyinsta-n2ye.onrender.com"},
+        ],
+    },
+}
