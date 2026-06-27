@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% set content = content %}
+
+{% block body %}
+<div id="loader">
+  <div class="loader-name">M&nbsp;&nbsp;N</div>
+  <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+  <div class="loader-pct" id="loaderPct">0%</div>
+</div>
+
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<canvas id="c"></canvas>
+
+<div class="layer">
+  <nav>
+    <a class="logo" href="#hero">MN<em>.</em></a>
+    <ul class="nav-links">
+      {% for link in content['nav_links'] %}
+      <li><a href="{{ link['href'] }}">{{ link['label'] }}</a></li>
+      {% endfor %}
+    </ul>
+    <a class="nav-resume" href="{{ url_for('download_resume') }}" download>Download Resume</a>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-left reveal">
+        <div class="tag"><span class="tag-dot"></span>{{ content['hero']['tag'] }}</div>
+        <h1 class="hero-title">
+          <span class="name1">{{ content['hero']['title_line_1'] }}</span>
+          <span class="name2">{{ content['hero']['title_line_2'] }}</span>
+        </h1>
+        <div class="hero-role">
+          <span style="color:var(--muted);font-family:var(--mono);font-size:0.9rem">{{ content['hero']['intro'] }} &nbsp;</span>
+          <span class="typed-text" id="typed"></span><span class="blink">|</span>
+        </div>
+        <p class="hero-para">{{ content['hero']['description'] }}</p>
+        <div class="cta-row">
+          <a href="#projects" class="btn-a btn-fill">{{ content['hero']['primary_cta'] }}</a>
+          <a href="{{ url_for('download_resume') }}" class="btn-a btn-ghost" download>Download Resume</a>
+        </div>
+        <div class="hero-stats">
+          {% for stat in content['hero']['stats'] %}
+          <div>
+            <div class="s-num" id="cn{{ loop.index }}">0</div>
+            <div class="s-lbl">{{ stat['label'] }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="hero-right reveal d2">
+        <div class="card3d-wrap" id="cardWrap">
+          <div class="card3d" id="card3d">
+            <div class="card3d-inner">
+              <div class="float-orbs">
+                <div class="orb"></div><div class="orb"></div><div class="orb"></div>
+              </div>
+              <div class="profile-ring-wrap">
+                <div class="spin-ring"></div>
+                <div class="spin-ring2"></div>
+                <img src="assets/images/profile.jpeg" alt="Mohit Navare" id="profileImg" style="border-radius:50%;width:140px;height:140px;object-fit:cover;position:absolute;top:10px;left:10px;z-index:2"/>
+              </div>
+              <div class="card3d-name">{{ content['hero']['card_name'] }}</div>
+              <div class="card3d-role">{{ content['hero']['card_role'] }}</div>
+              <div class="card3d-chips">
+                <span class="cc">Python</span><span class="cc">Flask</span><span class="cc">MongoDB</span><span class="cc">Java</span><span class="cc">C/C++</span>
+              </div>
+              <div style="font-size:0.7rem;color:var(--muted);font-family:var(--mono);margin-top:0.5rem">{{ content['hero']['card_location'] }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="div-line"><hr></div>
+
+  <section id="skills" class="reveal">
+    <span class="sec-tag">// tech_stack</span>
+    <h2 class="sec-title">Skills &amp; <span>Technologies</span></h2>
+    <p class="sec-sub">Every tool below is something I actively build with — not just listed for show.</p>
+    <div class="skills-wrap">
+      {% for skill in content['skills'] %}
+      <div class="sk-card reveal {{ skill['delay'] }}">
+        <span class="sk-ico">{{ skill['icon'] }}</span>
+        <div class="sk-name">{{ skill['name'] }}</div>
+        <div class="sk-tags">
+          {% for tag in skill['tags'] %}
+          <span class="sk-t">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="div-line"><hr></div>
+
+  <section id="projects">
+    <div class="reveal">
+      <span class="sec-tag">// projects</span>
+      <h2 class="sec-title">Work that <span>proves capability</span></h2>
+      <p class="sec-sub">Built end-to-end with product thinking, not just coding practice.</p>
+    </div>
+
+    <div class="proj-featured reveal">
+      <div>
+        <div class="proj-num">{{ content['featured_project']['number'] }}</div>
+        <span class="proj-badge">{{ content['featured_project']['badge'] }}</span>
+        <div class="proj-title">{{ content['featured_project']['title'] }}</div>
+        <p class="proj-desc">{{ content['featured_project']['description'] }}</p>
+        <div class="proj-tech">
+          {% for tech in content['featured_project']['tech'] %}
+          <span class="pt">{{ tech }}</span>
+          {% endfor %}
+        </div>
+        <a href="{{ content['featured_project']['link'] }}" target="_blank" class="proj-live">{{ content['featured_project']['link_text'] }}</a>
+      </div>
+      <div>
+        <div class="proj-screen">
+          <div class="proj-screen-bar"><div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div></div>
+          <div class="proj-screen-inner">{{ content['featured_project']['title'] }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="projs-grid">
+      {% for card in content['project_cards'] %}
+      <div class="pc reveal {{ card['delay'] }}">
+        <div class="pc-top" style="{{ card['gradient'] }}"><div class="pc-num">{{ card['number'] }}</div></div>
+        <div class="pc-body">
+          <div class="pc-title">{{ card['title'] }}</div>
+          <p class="pc-desc">{{ card['description'] }}</p>
+          <div class="pc-tech">
+            {% for tech in card['tech'] %}
+            <span class="pct">{{ tech }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="div-line"><hr></div>
+
+  <section id="experience">
+    <div class="reveal">
+      <span class="sec-tag">// experience &amp; education</span>
+      <h2 class="sec-title">Journey &amp; <span>Background</span></h2>
+    </div>
+    <div class="exp-wrap">
+      {% for item in content['experience'] %}
+      <div class="exp-card reveal {{ item['delay'] }}">
+        <div class="exp-period">{{ item['period'] }}</div>
+        <div class="exp-role">{{ item['role'] }}</div>
+        <div class="exp-org">{{ item['org'] }}</div>
+        <ul class="exp-pts">
+          {% for point in item['points'] %}
+          <li>{{ point }}</li>
+          {% endfor %}
+        </ul>
+        <div class="exp-chips">
+          {% for chip in item['chips'] %}
+          <span class="ex">{{ chip }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="div-line"><hr></div>
+
+  <section id="certs">
+    <div class="reveal">
+      <span class="sec-tag">// certifications</span>
+      <h2 class="sec-title">Credentials &amp; <span>Recognition</span></h2>
+    </div>
+    <div class="certs-wrap">
+      {% for cert in content['certifications'] %}
+      <div class="cert reveal">
+        <div class="cert-ico">{{ cert['icon'] }}</div>
+        <div>
+          <div class="cert-name">{{ cert['name'] }}</div>
+          <div class="cert-by">{{ cert['by'] }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="div-line"><hr></div>
+
+  <section id="contact">
+    <div class="contact-box reveal">
+      <span class="sec-tag" style="justify-content:center;display:block">// contact</span>
+      <h2 class="sec-title" style="margin-bottom:0.5rem">{{ content['contact']['heading'] }}</h2>
+      <p style="color:var(--muted);font-size:0.95rem;max-width:420px;margin:0 auto;line-height:1.7">{{ content['contact']['description'] }}</p>
+      <a href="mailto:{{ content['contact']['email'] }}" class="contact-mailto">{{ content['contact']['email'] }}</a>
+      <div class="contact-row">
+        {% for link in content['contact']['links'] %}
+        <a href="{{ link['href'] }}" {% if link['href'].startswith('http') %}target="_blank"{% endif %} class="c-lnk">{{ link['label'] }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Mohit Navare · Badlapur, Thane · NATS ID: STU7560642 · Built with intent &amp; code.</span>
+  </footer>
+</div>
+{% endblock %}
