@@ -1,21 +1,30 @@
 const root=document.documentElement;
-const toggle=document.getElementById("themeToggle");
+const availableThemes=["light","dark","midnight"];
 const metaTheme=document.querySelector('meta[name="theme-color"]');
+const themeButtons=[...document.querySelectorAll(".theme-option")];
 
 function applyTheme(theme, save=true){
-  root.dataset.theme=theme;
-  if(save) localStorage.setItem("portfolio-theme",theme);
-  const dark=theme==="dark";
-  if(toggle){
-    toggle.setAttribute("aria-pressed",String(dark));
-    toggle.setAttribute("aria-label",dark?"Switch to light mode":"Switch to dark mode");
-  }
+  const safeTheme=availableThemes.includes(theme)?theme:"light";
+  root.dataset.theme=safeTheme;
+  if(save) localStorage.setItem("portfolio-theme",safeTheme);
+  const dark=safeTheme==="dark" || safeTheme==="midnight";
+  themeButtons.forEach(btn=>{
+    const active=btn.dataset.theme===safeTheme;
+    btn.classList.toggle("is-active",active);
+    btn.setAttribute("aria-pressed",String(active));
+  });
   if(metaTheme) metaTheme.content=dark?"#030712":"#F8FAFC";
 }
+
 const savedTheme=localStorage.getItem("portfolio-theme");
 const systemDark=window.matchMedia("(prefers-color-scheme: dark)");
 applyTheme(savedTheme || (systemDark.matches?"dark":"light"),false);
-if(toggle) toggle.addEventListener("click",()=>applyTheme(root.dataset.theme==="dark"?"light":"dark"));
+
+if(themeButtons.length){
+  themeButtons.forEach(btn=>{
+    btn.addEventListener("click",()=>applyTheme(btn.dataset.theme || "light"));
+  });
+}
 
 if(!savedTheme){
   systemDark.addEventListener?.("change",e=>applyTheme(e.matches?"dark":"light",false));
@@ -38,6 +47,22 @@ function finishLoader(){
 }
 if(document.readyState==="complete") finishLoader();
 else window.addEventListener("load",finishLoader,{once:true});
+
+const navToggle=document.getElementById("navToggle");
+const mainNav=document.getElementById("mainNav");
+if(navToggle&&mainNav){
+  navToggle.addEventListener("click",()=>{
+    const isOpen=mainNav.classList.toggle("menu-open");
+    navToggle.setAttribute("aria-expanded",String(isOpen));
+  });
+
+  mainNav.querySelectorAll(".nav-links a, .nav-resume").forEach(link=>{
+    link.addEventListener("click",()=>{
+      mainNav.classList.remove("menu-open");
+      navToggle.setAttribute("aria-expanded","false");
+    });
+  });
+}
 
 const cardWrap=document.getElementById("cardWrap");
 const card3d=document.getElementById("card3d");
