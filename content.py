@@ -124,9 +124,9 @@ PAGE_CONTENT = {
     "contact": {
         "heading": "Let's build something valuable",
         "description": "Open to internships, apprenticeships (ISRO / DRDO), freelance work, and collaboration. Response within 24 hours.",
-        "email": "navaremohit2008@gmail.com",
+        "email": "navaremohit2006@gmail.com",
         "links": [
-            {"label": "✉ Email", "href": "mailto:navaremohit2008@gmail.com"},
+            {"label": "✉ Email", "href": "mailto:navaremohit2006@gmail.com"},
             {"label": "🔗 LinkedIn", "href": "https://linkedin.com/in/mohit-navare-48ba603aa"},
             {"label": "🐙 GitHub", "href": "https://github.com/Mohit-Navare"},
             {"label": "🚀 PyInsta", "href": "https://pyinsta-n2ye.onrender.com"},
